@@ -6,7 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'prepa.views.home', name='home'),
+    url(r'^$', 'lightbird.views.home', name='home'),
     url(r'^update/', 'prepa.views.update'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
