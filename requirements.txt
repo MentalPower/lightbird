@@ -1,0 +1,3 @@
+Django==1.4.1
+elementsoap==0.6-20071224
+psycopg2==2.4.5
