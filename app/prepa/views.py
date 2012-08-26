@@ -35,12 +35,15 @@ def update(request):
     prepa = PrepaService()
     response = prepa.getBreakdownsSummary()
     output = ""
+    total_num_breaks = 0
 
     for town, num_breaks in response.iteritems():
         output += "\n%s has %d breakdowns" % (town, num_breaks)
+        total_num_breaks += num_breaks
         response2 = prepa.getBreakdownsByTownOrCity(town)
 
         for area, breakdown in response2.iteritems():
             output += "\n\t%s (%s) %s" % (area, breakdown['status'], breakdown['last_update'])
 
+    output += "\n\n\t\t\tTotal breakdowns: %d" % total_num_breaks
     return HttpResponse("<pre>%s</pre>" % output)
