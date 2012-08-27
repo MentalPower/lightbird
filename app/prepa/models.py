@@ -24,6 +24,7 @@ class Status(models.Model):
 class Event(models.Model):
     area = models.ForeignKey(Area, on_delete=models.PROTECT)
     add_date = models.DateTimeField(auto_now_add=True)
+    last_seen = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return "%s:%s" % (self.area, unicode(self.add_date))
 
@@ -33,3 +34,10 @@ class Action(models.Model):
     add_date = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return "%s-%s-%s" % (self.event, self.status, self.add_date)
+
+class Scan(models.Model):
+    add_date = models.DateTimeField(auto_now_add=True)
+    num_towns = models.IntegerField()
+    num_breakdowns = models.IntegerField()
+    def __unicode__(self):
+        return "%d towns and %d breakdowns scanned on %s" % (num_towns, num_breakdowns, add_date)
