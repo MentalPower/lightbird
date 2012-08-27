@@ -3,6 +3,7 @@ from django.db import models
 class Scan(models.Model):
     num_towns = models.IntegerField(default=-1)
     num_breakdowns = models.IntegerField(default=-1)
+    time_taken = models.FloatField(default=0)
     record_time = models.DateTimeField(auto_now_add=True)
     def __unicode__(self):
         return "%d towns and %d breakdowns scanned on %s" % (self.num_towns, self.num_breakdowns, self.record_time)
