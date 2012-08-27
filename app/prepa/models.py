@@ -39,5 +39,9 @@ class Action(models.Model):
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
     scan_added = models.ForeignKey(Scan, on_delete=models.PROTECT)
+
+    class Meta:
+        unique_together = ("event", "status")
+
     def __unicode__(self):
         return "%s-%s-%s" % (self.event, self.status, self.add_date)
