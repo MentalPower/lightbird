@@ -10,8 +10,9 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding model 'Town'
         db.create_table('prepa_town', (
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200, primary_key=True)),
-            ('add_date', self.gf('django.db.models.fields.DateTimeField')()),
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('add_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal('prepa', ['Town'])
 
@@ -20,7 +21,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
             ('town', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['prepa.Town'], on_delete=models.PROTECT)),
-            ('add_date', self.gf('django.db.models.fields.DateTimeField')()),
+            ('add_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal('prepa', ['Area'])
 
@@ -28,7 +29,7 @@ class Migration(SchemaMigration):
         db.create_table('prepa_event', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('area', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['prepa.Area'], on_delete=models.PROTECT)),
-            ('add_date', self.gf('django.db.models.fields.DateTimeField')()),
+            ('add_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal('prepa', ['Event'])
 
@@ -36,8 +37,8 @@ class Migration(SchemaMigration):
         db.create_table('prepa_status', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(unique=True, max_length=200)),
-            ('name_en', self.gf('django.db.models.fields.CharField')(unique=True, max_length=200)),
-            ('add_date', self.gf('django.db.models.fields.DateTimeField')()),
+            ('name_en', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('add_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal('prepa', ['Status'])
 
@@ -46,7 +47,7 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('event', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['prepa.Event'], on_delete=models.PROTECT)),
             ('status', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['prepa.Status'], on_delete=models.PROTECT)),
-            ('add_date', self.gf('django.db.models.fields.DateTimeField')()),
+            ('add_date', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
         db.send_create_signal('prepa', ['Action'])
 
@@ -71,35 +72,36 @@ class Migration(SchemaMigration):
     models = {
         'prepa.action': {
             'Meta': {'object_name': 'Action'},
-            'add_date': ('django.db.models.fields.DateTimeField', [], {}),
+            'add_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'event': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['prepa.Event']", 'on_delete': 'models.PROTECT'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'status': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['prepa.Status']", 'on_delete': 'models.PROTECT'})
         },
         'prepa.area': {
             'Meta': {'object_name': 'Area'},
-            'add_date': ('django.db.models.fields.DateTimeField', [], {}),
+            'add_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'town': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['prepa.Town']", 'on_delete': 'models.PROTECT'})
         },
         'prepa.event': {
             'Meta': {'object_name': 'Event'},
-            'add_date': ('django.db.models.fields.DateTimeField', [], {}),
+            'add_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'area': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['prepa.Area']", 'on_delete': 'models.PROTECT'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'})
         },
         'prepa.status': {
             'Meta': {'object_name': 'Status'},
-            'add_date': ('django.db.models.fields.DateTimeField', [], {}),
+            'add_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '200'}),
-            'name_en': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '200'})
+            'name_en': ('django.db.models.fields.CharField', [], {'max_length': '200'})
         },
         'prepa.town': {
             'Meta': {'object_name': 'Town'},
-            'add_date': ('django.db.models.fields.DateTimeField', [], {}),
-            'name': ('django.db.models.fields.CharField', [], {'max_length': '200', 'primary_key': 'True'})
+            'add_date': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'})
         }
     }
 
