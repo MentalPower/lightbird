@@ -6,6 +6,7 @@ from django.utils import timezone
 from pprint import pprint, pformat
 from models import Town, Area, Event, Status, Action
 from datetime import datetime
+from django.conf import settings
 
 class PrepaService(SoapService):
     url = "http://wss.prepa.com/services/BreakdownReport.BreakdownReportHttpSoap11Endpoint/"
@@ -53,5 +54,8 @@ def update(request):
             output += "\n\t%s (%s) %s" % (area, breakdown['status'], breakdown['last_update'])
 
     output += "\n\n\t\t\tTotal breakdowns: %d" % total_num_breaks
-    output += "\n\n\n\n" + pformat(connection.queries)
+
+    if settings.DEBUG:
+        output += "\n\n\n\n" + pformat(connection.queries)
+
     return HttpResponse("<pre>%s</pre>" % output)
