@@ -30,15 +30,20 @@ class Status(models.Model):
 
 class Event(models.Model):
     area = models.ForeignKey(Area, on_delete=models.PROTECT)
-    scan_added = models.ForeignKey(Scan, on_delete=models.PROTECT, related_name='added')
-    scan_last_seen = models.ForeignKey(Scan, on_delete=models.PROTECT, related_name='last_seen')
+    scan_added = models.ForeignKey(Scan, on_delete=models.PROTECT, related_name='event_added')
+    scan_last_seen = models.ForeignKey(Scan, on_delete=models.PROTECT, related_name='event_last_seen')
+
+    class Meta:
+        ordering = ['-scan_last_seen']
+
     def __unicode__(self):
         return "%s:%s:%s" % (self.area, self.scan_added, self.scan_last_seen)
 
 class Action(models.Model):
     event = models.ForeignKey(Event, on_delete=models.PROTECT)
     status = models.ForeignKey(Status, on_delete=models.PROTECT)
-    scan_added = models.ForeignKey(Scan, on_delete=models.PROTECT)
+    scan_added = models.ForeignKey(Scan, on_delete=models.PROTECT, related_name='action_added')
+    scan_last_seen = models.ForeignKey(Scan, on_delete=models.PROTECT, related_name='action_last_seen')
 
     class Meta:
         unique_together = ("event", "status")
